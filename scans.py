@@ -3,11 +3,15 @@ from pathlib import Path, PurePath, PurePosixPath
 
 class scan_for_media:
     def __init__(self) -> None:
+        self.amount_of_files: int = 0
+        
         self.medias_with_extensions: list[str] = []
         self.medias_only_stem: list[str] = []
         self.medias_suffixes: list[str] = []
 
         self.medias_only_numbers: list[str] = []
+
+
 
     def find_media(self) -> list[str]:
         
@@ -20,7 +24,7 @@ class scan_for_media:
         else:
             print("Folder '_media' exists!") 
         print()
-        
+
         for index, file in enumerate(directory_media.glob("**/*")):
             print(f"current index: {index}")
             f_full_name: str = file.name
@@ -46,6 +50,9 @@ class scan_for_media:
             print()
 
             self.add_to_lists(f_full_name=f_full_name, f_stem=f_stem, f_suffixes=f_suffixes, f_numbers=f_numbers)
+            
+            self.amount_of_files += 1
+        
     
     def add_to_lists(self, f_full_name: str, f_stem: str, f_suffixes: str, f_numbers:str):
         self.medias_with_extensions.append(f_full_name)
@@ -112,6 +119,8 @@ class scan_for_media:
         print()
 
         print(f"Medias' only numbers: {self.medias_only_numbers}")
+
+        print(f"Total amount of files: {self.amount_of_files}")
 
 
 def run_experiments():
