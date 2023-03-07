@@ -41,7 +41,7 @@ class scan_for_media:
             print(f"Print suffixes: {f_suffixes}")
             
             # TODO - obtain ONLY numbers from file's string
-            f_numbers: str = self.obtain_numbers(f_stem=f_stem)
+            f_numbers: str = self.obtain_numbers_from_IMG_file(f_stem=f_stem)
             print(f"Printing only numbers: {f_numbers}")
             print()
 
@@ -73,7 +73,7 @@ class scan_for_media:
             index += 1
         return output
 
-    def obtain_numbers(self, f_stem:str) -> str:
+    def obtain_numbers_from_IMG_file(self, f_stem:str) -> str:
         output:str = None
 
         substrings_full_items:list[str] = f_stem.split()
