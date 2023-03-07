@@ -27,7 +27,20 @@ def experiment_finding_relative_path():
 
 def experiment_pathlib():
     print("hello pathlib :3")
-    cwd = Path.cwd()
+    cwd:Path = Path.cwd()
+    print(cwd)
 
-    output = cwd
+    output = Path(r'_docs/').glob("**/*")
     print(output)
+    print()
+
+    for file in output:
+        print(file)
+        print(file.__format__)
+
+        convert_to_string:str = str(file.stem)
+        print(f"print conversion: {convert_to_string}")
+        print()
+
+
+
