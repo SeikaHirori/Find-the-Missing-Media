@@ -1,0 +1,3 @@
+- RFER #1
+    - How to create range with four digits
+        - https://stackoverflow.com/questions/5256428/python-four-digits-counter
