@@ -25,7 +25,9 @@ class scan_for_media:
             print("Folder '_media' exists!") 
         print()
 
-        for index, file in enumerate(directory_media.glob("**/*")):
+        files_in_folder = sorted(directory_media.glob("**/*"))
+        files_in_folder.reverse() # TODO - Check whether reverse is faster or not.
+        for index, file in enumerate(files_in_folder):
             print(f"current index: {index}")
             f_full_name: str = file.name
 
