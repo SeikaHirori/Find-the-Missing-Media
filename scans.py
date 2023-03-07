@@ -41,7 +41,7 @@ class scan_for_media:
             print(f"Print suffixes: {f_suffixes}")
             
             # TODO - obtain ONLY numbers from file's string
-            f_numbers: str = "WIP"
+            f_numbers: str = self.obtain_numbers(f_stem=f_stem)
             print(f"Printing only numbers: {f_numbers}")
             print()
 
@@ -72,6 +72,34 @@ class scan_for_media:
             output = PurePosixPath(output).stem
             index += 1
         return output
+
+    def obtain_numbers(self, f_stem:str) -> str:
+        output:str = None
+
+        substrings_full_items:list[str] = f_stem.split()
+        print(substrings_full_items)
+        substrings_full_items.sort()
+        print(substrings_full_items)
+
+        img_grabbed:str = None
+        for sub in substrings_full_items:
+            if "IMG_" in sub:
+                img_grabbed:str = sub
+                break
+        if img_grabbed is None:
+            return
+
+        substrings_img: list[str] = img_grabbed.split("_")
+        print(substrings_img)
+        for index, value in enumerate(substrings_img):
+            if value == "IMG":
+                substrings_img[index] = ""
+
+        output = "".join(substrings_img)
+        return output
+
+    def new_method(self):
+        print()
 
     def debug_print_lists(self):
         print(f"Media with extensions: {self.medias_with_extensions}")
