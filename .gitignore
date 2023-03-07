@@ -6,4 +6,4 @@ __pycache__/*
 _media/*
 !_media/.gitkeep
 !_media/test.md
-!_media/meep.md.txt
+!_media/zeep.md.txt
