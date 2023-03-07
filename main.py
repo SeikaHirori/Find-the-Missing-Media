@@ -10,3 +10,5 @@
 # Create another array for duplicates
     # if statement: check if duplicate item is in  var "fileFounded" first
     # Next spot to check is in var "items_in_folder"
+
+# test
