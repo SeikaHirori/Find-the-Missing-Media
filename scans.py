@@ -87,8 +87,8 @@ class scan_for_media:
 
         substrings_full_items:list[str] = f_stem.split()
         print(substrings_full_items)
-        substrings_full_items.sort()
-        print(substrings_full_items)
+        # substrings_full_items.sort()
+        # print(substrings_full_items)
 
         img_grabbed:str = None
         for sub in substrings_full_items:
