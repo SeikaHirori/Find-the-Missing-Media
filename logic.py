@@ -20,5 +20,6 @@ class logic_time:
         return self.desired_range.pop(0)
     
     def is_number_in_list(self, number:str) -> bool:
+        # Use binary search here
         return #TODO
 
