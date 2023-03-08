@@ -26,7 +26,10 @@ class Foundation:
 
         self.files.append(item)
     
-    def save_to_xlsx():
+    def show_spreadsheet_type(self) -> str:
+        return self.spreadsheet_type.value
+
+    def save_to_xlsx(self):
         # TODO
         headers_column: list[str] = [
             "file name", 
