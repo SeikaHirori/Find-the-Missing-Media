@@ -1,5 +1,6 @@
 import os
 from pathlib import Path, PurePath, PurePosixPath
+from database import Scanned
 
 class scan_for_media:
     def __init__(self) -> None:
@@ -9,12 +10,13 @@ class scan_for_media:
         self.medias_only_stem: list[str] = []
         self.medias_suffixes: list[list[str]] = []
 
+
         self.medias_only_numbers: list[str] = []
         self.potential_duplicate: list[bool] = []
 
 
 
-    def find_media(self) -> list[str]:
+    def find_media(self, db_scanned: Scanned) -> list[str]:
         
         _pathway_for_media: str = "_media/"
         directory_media:Path = Path(_pathway_for_media)
@@ -73,6 +75,16 @@ class scan_for_media:
         self.medias_only_numbers.append(f_numbers)
 
         # print("FINISH ME!\n---")
+
+    def check_number_string_is_greater_than_4(self, f_numbers:str) -> bool:
+
+        if f_numbers is not None:
+            if len(f_numbers) > 4:
+                split_f_num: list[str] = f_numbers.split(" ")
+                f_numbers = split_f_num[0]
+                return True
+        
+        return False
 
     def obtain_pure_stem(self, f_suffixes:list[str],file:Path) -> str:
         """ This ensures that the stem is PURE if there's more than one suffix.

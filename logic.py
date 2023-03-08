@@ -15,4 +15,10 @@ class logic_time:
 
         # print(output_range)
         self.desired_range = output_range
+    
+    def pop_front(self):
+        return self.desired_range.pop(0)
+    
+    def is_number_in_list(self, number:str) -> bool:
+        return #TODO
 
