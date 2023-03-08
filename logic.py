@@ -1,13 +1,18 @@
+class logic_time:
 
-def run_experiments():
-    createRange(starting_point=0, end=50)
+    def __init__(self) -> None:
+        self.desired_range: list[str] = []
 
-def createRange(starting_point:int = 0, end:int = 9999) -> list[str]:
-    print(f"hello {createRange.__name__}")
 
-    # RFER #1
-    output_range: list[str] =  ["%04d" % x for x in range(starting_point, end)]
+    def run_experiments(self):
+        self.createRange(starting_point=0, end=50)
 
-    print(output_range)
-    return output_range
+    def createRange(self, starting_point:int = 0, end:int = 9999) -> list[str]:
+        print(f"hello {self.createRange.__name__}")
+
+        # RFER #1
+        output_range: list[str] =  ["%04d" % x for x in range(starting_point, end + 1)]
+
+        # print(output_range)
+        self.desired_range = output_range
 

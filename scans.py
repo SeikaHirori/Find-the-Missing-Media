@@ -7,7 +7,7 @@ class scan_for_media:
         
         self.medias_with_extensions: list[str] = []
         self.medias_only_stem: list[str] = []
-        self.medias_suffixes: list[str] = []
+        self.medias_suffixes: list[list[str]] = []
 
         self.medias_only_numbers: list[str] = []
         self.potential_duplicate: list[bool] = []
@@ -27,7 +27,7 @@ class scan_for_media:
         print()
 
         files_in_folder = sorted(directory_media.glob("**/*"))
-        files_in_folder.reverse() # TODO - Check whether reverse is faster or not.
+
         for index, file in enumerate(files_in_folder):
             # print(f"current index: {index}")
             f_full_name: str = file.name
@@ -61,13 +61,16 @@ class scan_for_media:
         self.medias_with_extensions.append(f_full_name)
         self.medias_only_stem.append(f_stem)
         self.medias_suffixes.append(f_suffixes)
-        self.medias_only_numbers.append(f_numbers)
 
         is_it_a_possible_duplicate: bool = False
         if f_numbers is not None:
             if len(f_numbers) > 4:
                 is_it_a_possible_duplicate = True
+
+                split_f_num: list[str] = f_numbers.split(" ")
+                f_numbers = split_f_num[0]
         self.potential_duplicate.append(is_it_a_possible_duplicate)
+        self.medias_only_numbers.append(f_numbers)
 
         # print("FINISH ME!\n---")
 
@@ -106,12 +109,12 @@ class scan_for_media:
         if "IMG" in substrings_full_items:
             substrings_full_items.pop(0)
             img_grabbed = "".join(substrings_full_items)
-            print(f"img_grabbed: {img_grabbed}")
+            # print(f"img_grabbed: {img_grabbed}")
         if img_grabbed is None:
             return None
 
         substrings_img: list[str] = img_grabbed.split()
-        print(substrings_img)
+        # print(substrings_img)
 
 
         output = " ".join(substrings_img)
@@ -121,27 +124,29 @@ class scan_for_media:
         print()
 
     def debug_print_lists(self):
-        print(f"Media with extensions: {self.medias_with_extensions}")
+        print("--- DEBUG AREA :3 ---")
+
+        print(f"* Media with extensions: {self.medias_with_extensions}")
         print(f"size: {len(self.medias_with_extensions)}")
         print()
 
-        print(f"Medias with only stem: {self.medias_only_stem}")
+        print(f"* Medias with only stem: {self.medias_only_stem}")
         print(f"size: {len(self.medias_only_stem)}")
         print()
 
-        print(f"Medias suffixes: {self.medias_suffixes}")
+        print(f"* Medias suffixes: {self.medias_suffixes}")
         print(f"size: {len(self.medias_suffixes)}")
         print()
 
-        print(f"Medias' only numbers: {self.medias_only_numbers}")
+        print(f"* Medias' only numbers: {self.medias_only_numbers}")
         print(f"size: {len(self.medias_only_numbers)}")
         print()
 
-        print(f"Potential duplicates: {self.potential_duplicate}")
+        print(f"* Potential duplicates: {self.potential_duplicate}")
         print(f"size: {len(self.potential_duplicate)}")
+        print()
 
-
-        print(f"Total amount of files: {self.amount_of_files}")
+        print(f"* Total amount of files: {self.amount_of_files}")
 
 
 def run_experiments():
