@@ -10,6 +10,7 @@ class scan_for_media:
         self.medias_suffixes: list[str] = []
 
         self.medias_only_numbers: list[str] = []
+        self.potential_duplicate: list[bool] = []
 
 
 
@@ -62,7 +63,13 @@ class scan_for_media:
         self.medias_suffixes.append(f_suffixes)
         self.medias_only_numbers.append(f_numbers)
 
-        print("FINISH ME!")
+        is_it_a_possible_duplicate: bool = False
+        if f_numbers is not None:
+            if " " in f_numbers :
+                is_it_a_possible_duplicate = True
+        self.potential_duplicate.append(is_it_a_possible_duplicate)
+
+        print("FINISH ME!\n---")
 
     def obtain_pure_stem(self, f_suffixes:list[str],file:Path) -> str:
         """ This ensures that the stem is PURE if there's more than one suffix.
@@ -84,27 +91,35 @@ class scan_for_media:
 
     def obtain_numbers_from_IMG_file(self, f_stem:str) -> str:
         output:str = None
+        print()
 
-        substrings_full_items:list[str] = f_stem.split()
+        substrings_full_items:list[str] = f_stem.split("_")
         print(substrings_full_items)
         # substrings_full_items.sort()
         # print(substrings_full_items)
 
         img_grabbed:str = None
-        for sub in substrings_full_items:
-            if "IMG_" in sub:
-                img_grabbed:str = sub
-                break
-        if img_grabbed is None:
-            return
+        # for sub in substrings_full_items:
+        #     if "IMG" in sub:
+        #         img_grabbed:str = ""
+        #         break
+        if "IMG" in substrings_full_items:
+            substrings_full_items.pop(0)
+            img_grabbed = "".join(substrings_full_items)
 
-        substrings_img: list[str] = img_grabbed.split("_")
+        if img_grabbed is None:
+            return None
+
+        substrings_img: list[str] = img_grabbed.split()
         print(substrings_img)
         for index, value in enumerate(substrings_img):
             if value == "IMG":
                 substrings_img[index] = ""
 
-        output = "".join(substrings_img)
+        print(f"len(substrings_img): {len(substrings_img)} \n")
+
+
+        output = " ".join(substrings_img)
         return output
 
     def new_method(self):
@@ -112,15 +127,24 @@ class scan_for_media:
 
     def debug_print_lists(self):
         print(f"Media with extensions: {self.medias_with_extensions}")
+        print(f"size: {len(self.medias_with_extensions)}")
         print()
 
         print(f"Medias with only stem: {self.medias_only_stem}")
+        print(f"size: {len(self.medias_only_stem)}")
         print()
 
         print(f"Medias suffixes: {self.medias_suffixes}")
+        print(f"size: {len(self.medias_suffixes)}")
         print()
 
         print(f"Medias' only numbers: {self.medias_only_numbers}")
+        print(f"size: {len(self.medias_only_numbers)}")
+        print()
+
+        print(f"Potential duplicates: {self.potential_duplicate}")
+        print(f"size: {len(self.potential_duplicate)}")
+
 
         print(f"Total amount of files: {self.amount_of_files}")
 
