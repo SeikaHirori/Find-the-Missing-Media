@@ -29,7 +29,7 @@ class scan_for_media:
         files_in_folder = sorted(directory_media.glob("**/*"))
         files_in_folder.reverse() # TODO - Check whether reverse is faster or not.
         for index, file in enumerate(files_in_folder):
-            print(f"current index: {index}")
+            # print(f"current index: {index}")
             f_full_name: str = file.name
 
             f_suffixes:str = file.suffixes
@@ -41,16 +41,16 @@ class scan_for_media:
                 f_stem = file.stem
 
 
-            print(f"Printing file's name with extensions: {f_full_name}")
+            # print(f"Printing file's name with extensions: {f_full_name}")
 
-            print(f"Printing file's stem: {f_stem}")
+            # print(f"Printing file's stem: {f_stem}")
             
-            print(f"Print suffixes: {f_suffixes}")
+            # print(f"Print suffixes: {f_suffixes}")
             
             # TODO - obtain ONLY numbers from file's string
             f_numbers: str = self.obtain_numbers_from_IMG_file(f_stem=f_stem)
-            print(f"Printing only numbers: {f_numbers}")
-            print()
+            # print(f"Printing only numbers: {f_numbers}")
+            # print()
 
             self.add_to_lists(f_full_name=f_full_name, f_stem=f_stem, f_suffixes=f_suffixes, f_numbers=f_numbers)
             
@@ -65,11 +65,11 @@ class scan_for_media:
 
         is_it_a_possible_duplicate: bool = False
         if f_numbers is not None:
-            if " " in f_numbers :
+            if len(f_numbers) > 4:
                 is_it_a_possible_duplicate = True
         self.potential_duplicate.append(is_it_a_possible_duplicate)
 
-        print("FINISH ME!\n---")
+        # print("FINISH ME!\n---")
 
     def obtain_pure_stem(self, f_suffixes:list[str],file:Path) -> str:
         """ This ensures that the stem is PURE if there's more than one suffix.
@@ -91,10 +91,10 @@ class scan_for_media:
 
     def obtain_numbers_from_IMG_file(self, f_stem:str) -> str:
         output:str = None
-        print()
+        # print()
 
         substrings_full_items:list[str] = f_stem.split("_")
-        print(substrings_full_items)
+        # print(substrings_full_items)
         # substrings_full_items.sort()
         # print(substrings_full_items)
 
@@ -106,17 +106,12 @@ class scan_for_media:
         if "IMG" in substrings_full_items:
             substrings_full_items.pop(0)
             img_grabbed = "".join(substrings_full_items)
-
+            print(f"img_grabbed: {img_grabbed}")
         if img_grabbed is None:
             return None
 
         substrings_img: list[str] = img_grabbed.split()
         print(substrings_img)
-        for index, value in enumerate(substrings_img):
-            if value == "IMG":
-                substrings_img[index] = ""
-
-        print(f"len(substrings_img): {len(substrings_img)} \n")
 
 
         output = " ".join(substrings_img)
