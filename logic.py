@@ -15,6 +15,7 @@ class logic_time:
 
         # print(output_range)
         self.desired_range = output_range
+        return output_range
     
     def pop_front(self):
         return self.desired_range.pop(0)

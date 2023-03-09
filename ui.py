@@ -20,11 +20,19 @@ def main():
     scanned_goods.find_media(db_scanned=db_scanned)
     # scanned_goods.debug_print_lists()
 
-    logic_magic.createRange(starting_point=38, end = 44)
+    select_range:list[str] = logic_magic.createRange(starting_point=38, end = 44)
     print(logic_magic.desired_range)
+    print(select_range)
 
-    for index, number in enumerate(scanned_goods.medias_only_numbers):
-        print(f"Index #{index}: {number}") # Test
+    range_object:Foundation = Foundation()
+    range_object.db_numbers = select_range
+    print(f"{range_object.__str__}: {range_object.db_numbers}")
+
+
+    test_output = range_object.pop_front_file_dict()
+    print(test_output)
+    
+
 
 
 if __name__ == '__main__':
