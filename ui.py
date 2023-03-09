@@ -1,5 +1,5 @@
 from logic import logic_time
-from database import Foundation, Original_Image, Duplicate_Image, Misc_file, Scanned, Missing_Images
+from database import Foundation, Original_Image, Duplicate_Image, Misc_file, Selected_Range, Scanned, Missing_Images
 from scans import scan_for_media
 
 def main():
@@ -24,7 +24,7 @@ def main():
     print(logic_magic.desired_range)
     print(select_range)
 
-    range_object:Foundation = Foundation()
+    range_object:Selected_Range = Selected_Range()
     range_object.db_numbers = select_range
     print(f"{range_object.__str__}: {range_object.db_numbers}\n")
 
@@ -32,6 +32,7 @@ def main():
     test_output = range_object.pop_front_only_numbers()
     print(f"Popped front number only: {test_output}")
     range_object.debug_print_all_lists()
+    print(range_object.is_empty())
     
 
 

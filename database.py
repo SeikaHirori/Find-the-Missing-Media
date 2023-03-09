@@ -67,7 +67,7 @@ class Foundation:
         return len(self.db_file_name)
     
     def is_empty(self) -> bool:
-        return len(self.db_file_name) == 0
+        return len(self.db_dict_items) == 0
 
     def pop_individual_items_at_position(self, pos: int) -> list[list[str, str, list[str], bool, str, bool]]:
         item: list[list[str, str, list[str], bool, str, bool]] = [
@@ -181,6 +181,15 @@ class Foundation:
         Dict: {self.db_dict_items}
         '''
         print(output_display)
+
+class Selected_Range(Foundation):
+    def __init__(self) -> None:
+        super().__init__()
+    
+    def is_empty(self) -> bool:
+        return len(self.db_numbers) == 0
+
+    
 
 class Scanned(Foundation):
 
