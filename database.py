@@ -39,6 +39,7 @@ class Foundation:
         self.db_numbers
         self.db_duplicate
 
+        self.db_dict_items
         # self.files
         
         pass
@@ -67,7 +68,7 @@ class Foundation:
         return len(self.db_file_name)
     
     def is_empty(self) -> bool:
-        return len(self.db_dict_items) == 0
+        return self.size() == 0
 
     def pop_individual_items_at_position(self, pos: int) -> list[list[str, str, list[str], bool, str, bool]]:
         item: list[list[str, str, list[str], bool, str, bool]] = [
@@ -187,7 +188,24 @@ class Selected_Range(Foundation):
         super().__init__()
     
     def is_empty(self) -> bool:
-        return len(self.db_numbers) == 0
+        return self.size() == 0
+
+    def size(self) -> int:
+        return len(self.db_numbers)
+
+    def add_to_database(self, range: list[str]):
+        self.db_numbers = range
+        
+    
+    def export_remaining_numbers(self) -> list[str]:
+        output:list[str] = self.db_numbers
+
+        self.db_numbers = []
+
+        return output
+
+    def debug_print_all_lists(self):
+        print(f"Numbers: {self.db_numbers}")
 
     
 

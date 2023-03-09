@@ -20,17 +20,20 @@ def main():
     scanned_goods.find_media(db_scanned=db_scanned)
     # scanned_goods.debug_print_lists()
 
-    select_range:list[str] = logic_magic.createRange(starting_point=38, end = 44)
+    desired_range:list[str] = logic_magic.createRange(starting_point=38, end = 44)
     print(logic_magic.desired_range)
-    print(select_range)
+    print(desired_range)
 
     range_object:Selected_Range = Selected_Range()
-    range_object.db_numbers = select_range
+    range_object.add_to_database(desired_range)
     print(f"{range_object.__str__}: {range_object.db_numbers}\n")
 
 
     test_output = range_object.pop_front_only_numbers()
     print(f"Popped front number only: {test_output}")
+    range_object.debug_print_all_lists()
+    print(range_object.is_empty())
+    print(range_object.export_remaining_numbers())
     range_object.debug_print_all_lists()
     print(range_object.is_empty())
     
