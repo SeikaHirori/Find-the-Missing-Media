@@ -26,11 +26,12 @@ def main():
 
     range_object:Foundation = Foundation()
     range_object.db_numbers = select_range
-    print(f"{range_object.__str__}: {range_object.db_numbers}")
+    print(f"{range_object.__str__}: {range_object.db_numbers}\n")
 
 
-    test_output = range_object.pop_front_file_dict()
-    print(test_output)
+    test_output = range_object.pop_front_only_numbers()
+    print(f"Popped front number only: {test_output}")
+    range_object.debug_print_all_lists()
     
 
 

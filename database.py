@@ -122,10 +122,14 @@ class Foundation:
         position = 0
         output: dict = self.db_dict_items.pop(position)
 
-        # self.delete_item_at_position(position=position)
+        self.delete_item_at_position(position=position)
 
 
         return output
+
+    def pop_front_only_numbers(self) -> str:
+        position = 0
+        return self.db_numbers.pop(position)
 
     def delete_item_at_position(self, position: int):
         del self.db_file_name[position]
@@ -171,8 +175,10 @@ class Foundation:
         Stems: {self.db_stem}
         Suffixes: {self.db_suffixes}
         Is it IMG?: {self.db_is_it_IMG}
-        {self.db_numbers}
-        {self.db_duplicate}
+        Numbers: {self.db_numbers}
+        Duplidate?: {self.db_duplicate}
+
+        Dict: {self.db_dict_items}
         '''
         print(output_display)
 
