@@ -165,7 +165,11 @@ class Foundation:
             "Note:",
         ]
         header: str = ",".join(headers_column)
-        pass
+        
+        raise NotImplementedError
+
+    def create_row_for_xlsx(self):
+        raise NotImplementedError
 
     def debug_print_all_lists(self):
         print("--- debug print all instance lists ;3 ---")
@@ -182,31 +186,6 @@ class Foundation:
         Dict: {self.db_dict_items}
         '''
         print(output_display)
-
-class Selected_Range(Foundation):
-    def __init__(self) -> None:
-        super().__init__()
-    
-    def is_empty(self) -> bool:
-        return self.size() == 0
-
-    def size(self) -> int:
-        return len(self.db_numbers)
-
-    def add_to_database(self, range: list[str]):
-        self.db_numbers = range
-        
-    
-    def export_remaining_numbers(self) -> list[str]:
-        output:list[str] = self.db_numbers
-
-        self.db_numbers = []
-
-        return output
-
-    def debug_print_all_lists(self):
-        print(f"Numbers: {self.db_numbers}")
-
     
 
 class Scanned(Foundation):
@@ -244,3 +223,43 @@ class Misc_file(Foundation):
 
     def __init__(self) -> None:
         super().__init__()
+
+class Selected_Range(Foundation):
+    """Contains selected range only
+
+    Args:
+        Foundation (_type_): _description_
+    """
+
+    def __init__(self) -> None:
+        self.db_numbers:list[str ]= []
+    
+    def is_empty(self) -> bool:
+        return self.size() == 0
+
+    def size(self) -> int:
+        return len(self.db_numbers)
+
+    def add_to_database(self, range: list[str]):
+        self.db_numbers = range
+    
+    def export_remaining_numbers(self) -> list[str]:
+        output:list[str] = self.db_numbers
+
+        self.db_numbers = []
+
+        return output
+
+    def save_to_xlsx(self):
+        header_columns: list[str] = [
+            "Missing Numbers",
+        ]
+        header:str = ",".join(header_columns)
+        
+        raise NotImplementedError
+
+    def create_row_for_xlsx(self):
+        raise NotImplementedError
+
+    def debug_print_all_lists(self):
+        print(f"Numbers: {self.db_numbers}")

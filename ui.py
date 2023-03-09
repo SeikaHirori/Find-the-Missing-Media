@@ -16,9 +16,11 @@ def main():
     db_scanned:Scanned = Scanned()
     db_missing_IMG: Missing_Images = Missing_Images()
     print(f"Spreadsheet type: {db_duplicate_img.show_spreadsheet_type()}")
-
+    
+    print("--- Look down here :3 ---\n")
     scanned_goods.find_media(db_scanned=db_scanned)
-    # scanned_goods.debug_print_lists()
+    scanned_goods.debug_print_lists()
+    print("\n--- Look up here :3 ---")
 
     desired_range:list[str] = logic_magic.createRange(starting_point=38, end = 44)
     print(logic_magic.desired_range)

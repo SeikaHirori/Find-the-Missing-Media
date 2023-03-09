@@ -13,10 +13,13 @@ class scan_for_media:
 
         self.medias_only_numbers: list[str] = []
         self.potential_duplicate: list[bool] = []
+        self.is_it_IMG:list[bool] = []
+
+        self.files_dict: list[dict] = []
 
 
 
-    def find_media(self, db_scanned: Scanned) -> list[str]:
+    def find_media(self, db_scanned: Scanned) -> list[dict]:
         
         _pathway_for_media: str = "_media/"
         directory_media:Path = Path(_pathway_for_media)
@@ -43,23 +46,42 @@ class scan_for_media:
                 f_stem = file.stem
 
 
-            # print(f"Printing file's name with extensions: {f_full_name}")
+            print(f"Printing file's name with extensions: {f_full_name}")
 
             # print(f"Printing file's stem: {f_stem}")
             
             # print(f"Print suffixes: {f_suffixes}")
             
             # TODO - obtain ONLY numbers from file's string
-            f_numbers: str = self.obtain_numbers_from_IMG_file(f_stem=f_stem)
+            dict_is_IMG_and_has_numbers: dict = self.obtain_numbers_from_IMG_file(f_stem=f_stem)
+            print(dict_is_IMG_and_has_numbers)
+            f_numbers: str = dict_is_IMG_and_has_numbers["numbers"]
+            is_it_IMG:bool = dict_is_IMG_and_has_numbers["is_it_img"]
             # print(f"Printing only numbers: {f_numbers}")
             # print()
 
-            self.add_to_lists(f_full_name=f_full_name, f_stem=f_stem, f_suffixes=f_suffixes, f_numbers=f_numbers)
+            # self.add_to_lists(f_full_name=f_full_name, f_stem=f_stem, f_suffixes=f_suffixes, f_numbers=f_numbers)
+            is_duplicate: bool = self.is_it_a_duplicate(f_numbers=f_numbers)
             
+
+            new_dict = self.create_dict(file_name=f_full_name, stem=f_stem, suffixes=f_suffixes, is_IMG=is_it_IMG, numbers=f_numbers, duplicate=is_duplicate)
+            self.files_dict.append(new_dict)
             self.amount_of_files += 1
+
+    def create_dict(self, file_name: str, stem: str, suffixes: list[str], is_IMG: bool, numbers: str, duplicate: bool) -> dict:
+        the_goods:dict = {}
+
+        the_goods["file name"] = file_name
+        the_goods["stem"] = stem
+        the_goods["suffixes"] = suffixes
+        the_goods["is_it_IMG?"] = is_IMG
+        the_goods["numbers"] = numbers
+        the_goods["duplicates"] = duplicate
+
+        return the_goods
         
     
-    def add_to_lists(self, f_full_name: str, f_stem: str, f_suffixes: str, f_numbers:str):
+    def add_to_lists(self, f_full_name: str, f_stem: str, f_suffixes: str, f_numbers:str, is_it_img: bool):
         self.medias_with_extensions.append(f_full_name)
         self.medias_only_stem.append(f_stem)
         self.medias_suffixes.append(f_suffixes)
@@ -73,8 +95,18 @@ class scan_for_media:
                 f_numbers = split_f_num[0]
         self.potential_duplicate.append(is_it_a_possible_duplicate)
         self.medias_only_numbers.append(f_numbers)
+        self.is_it_IMG.append(is_it_img)
 
         # print("FINISH ME!\n---")
+
+    def is_it_a_duplicate(self, f_numbers:str) -> dict:
+        is_it_a_possible_duplicate: bool = False
+        if f_numbers is not None:
+            if len(f_numbers) > 4:
+                is_it_a_possible_duplicate = True
+        
+        return is_it_a_possible_duplicate
+
 
     def check_number_string_is_greater_than_4(self, f_numbers:str) -> bool:
 
@@ -104,7 +136,7 @@ class scan_for_media:
             index += 1
         return output
 
-    def obtain_numbers_from_IMG_file(self, f_stem:str) -> str:
+    def obtain_numbers_from_IMG_file(self, f_stem:str) -> dict:
         output:str = None
         # print()
 
@@ -118,18 +150,25 @@ class scan_for_media:
         #     if "IMG" in sub:
         #         img_grabbed:str = ""
         #         break
+        is_it_IMG:bool = False
         if "IMG" in substrings_full_items:
             substrings_full_items.pop(0)
+            is_it_IMG = True
             img_grabbed = "".join(substrings_full_items)
             # print(f"img_grabbed: {img_grabbed}")
-        if img_grabbed is None:
-            return None
+        # if img_grabbed is None:
+        #     return None
 
-        substrings_img: list[str] = img_grabbed.split()
-        # print(substrings_img)
+        numbers:str = None
+        if not img_grabbed is None:
+            substrings_img: list[str] = img_grabbed.split()
+            # print(substrings_img)
+            numbers = " ".join(substrings_img)
 
 
-        output = " ".join(substrings_img)
+        output:dict = {
+            "numbers": numbers,
+            "is_it_img": is_it_IMG }
         return output
 
     def new_method(self):
@@ -158,7 +197,12 @@ class scan_for_media:
         print(f"size: {len(self.potential_duplicate)}")
         print()
 
+        print(f"Dictionary items: {self.files_dict}")
+
         print(f"* Total amount of files: {self.amount_of_files}")
+    
+    def export_list_of_dict(self) -> list[dict]:
+        return self.files_dict
 
 
 def run_experiments():
