@@ -59,26 +59,9 @@ class Foundation:
         new_dict_item: dict = self.create_dict(file_name=file_name, stem=stem, suffixes=suffixes, is_IMG=is_IMG, numbers=numbers, duplicate=duplicate)
         self.db_dict_items.append(new_dict_item)
 
-    def dissect_everything_in_dict(self, item_dict:dict):
-        raise NotImplementedError
     
-    def dissect_file_name(self, item_dict:dict) -> str:
-        return item_dict["file_name"]
     
-    def dissect_stem(self, item_dict:dict) -> str:
-        raise NotImplementedError
     
-    def dissect_suffixes(self, item_dict:dict) -> list[str]:
-        raise NotImplementedError
-    
-    def dissect_is_it_IMG(self, item_dict:dict) -> bool:
-        raise NotImplementedError
-    
-    def dissect_numbers(self, item_dict:dict) -> str:
-        raise NotImplementedError
-    
-    def dissect_duplicate(self, item_dict:dict) -> bool:
-        raise NotImplementedError
 
 
     def __dissect_inbound_list(self, inbound_list: list[list[str, str, list[str], bool, str, bool]]):
@@ -312,6 +295,7 @@ class Selected_Range(Foundation):
         raise NotImplementedError
 
     def debug_print_all_lists(self):
+        print()
         self.debug_print_look_down_here()
 
         class_name: str = '*Selected_Range'
