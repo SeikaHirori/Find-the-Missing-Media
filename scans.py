@@ -4,7 +4,7 @@ from database import Scanned
 
 class scan_for_media:
     def __init__(self) -> None:
-        self.amount_of_files: int = 0
+        self.__class_name:str = "scan_for_media"
         
         self.medias_with_extensions: list[str] = []
         self.medias_only_stem: list[str] = []
@@ -66,7 +66,6 @@ class scan_for_media:
 
             new_dict = self.create_dict(file_name=f_full_name, stem=f_stem, suffixes=f_suffixes, is_IMG=is_it_IMG, numbers=f_numbers, duplicate=is_duplicate)
             self.files_dict.append(new_dict)
-            self.amount_of_files += 1
 
     def create_dict(self, file_name: str, stem: str, suffixes: list[str], is_IMG: bool, numbers: str, duplicate: bool) -> dict:
         the_goods:dict = {}
@@ -74,7 +73,7 @@ class scan_for_media:
         the_goods["file name"] = file_name
         the_goods["stem"] = stem
         the_goods["suffixes"] = suffixes
-        the_goods["is_it_IMG?"] = is_IMG
+        the_goods["is_it_IMG"] = is_IMG
         the_goods["numbers"] = numbers
         the_goods["duplicates"] = duplicate
 
@@ -171,10 +170,17 @@ class scan_for_media:
             "is_it_img": is_it_IMG }
         return output
 
-    def new_method(self):
-        print()
+    def debug_print_look_down_here(self):
+        print("--- Look down here :3 --- \n")
+        print(f"*Class: {self.__class_name} \n")
+
+    def debug_print_look_up_here(self):
+        print("\n--- Look up here :3 ---")
+
 
     def debug_print_lists(self):
+        self.debug_print_look_down_here()
+
         print("--- DEBUG AREA :3 ---")
 
         print(f"* Media with extensions: {self.medias_with_extensions}")
@@ -199,7 +205,13 @@ class scan_for_media:
 
         print(f"Dictionary items: {self.files_dict}")
 
-        print(f"* Total amount of files: {self.amount_of_files}")
+        print(f"* Total amount of files: {self.size()}")
+
+        self.debug_print_look_up_here()
+
+    def size(self):
+        return len(self.files_dict)
+
     
     def export_list_of_dict(self) -> list[dict]:
         return self.files_dict

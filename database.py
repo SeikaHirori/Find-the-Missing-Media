@@ -44,7 +44,11 @@ class Foundation:
         
         pass
 
+    def import_list_of_dict(self, inbound_list_of_dict:list[dict]) -> None:
+        self.db_dict_items = inbound_list_of_dict
+
     def add_to_database(self, file_name: str, stem: str, suffixes: list[str], is_IMG: bool, numbers: str, duplicate: bool):
+        # This is here for debug
         self.db_file_name.append(file_name)
         self.db_stem.append(stem)
         self.db_suffixes.append(suffixes)
@@ -55,8 +59,29 @@ class Foundation:
         new_dict_item: dict = self.create_dict(file_name=file_name, stem=stem, suffixes=suffixes, is_IMG=is_IMG, numbers=numbers, duplicate=duplicate)
         self.db_dict_items.append(new_dict_item)
 
+    def dissect_everything_in_dict(self, item_dict:dict):
+        raise NotImplementedError
     
-    def dissect_inbound_list(self, inbound_list: list[list[str, str, list[str], bool, str, bool]]):
+    def dissect_file_name(self, item_dict:dict) -> str:
+        return item_dict["file_name"]
+    
+    def dissect_stem(self, item_dict:dict) -> str:
+        raise NotImplementedError
+    
+    def dissect_suffixes(self, item_dict:dict) -> list[str]:
+        raise NotImplementedError
+    
+    def dissect_is_it_IMG(self, item_dict:dict) -> bool:
+        raise NotImplementedError
+    
+    def dissect_numbers(self, item_dict:dict) -> str:
+        raise NotImplementedError
+    
+    def dissect_duplicate(self, item_dict:dict) -> bool:
+        raise NotImplementedError
+
+
+    def __dissect_inbound_list(self, inbound_list: list[list[str, str, list[str], bool, str, bool]]):
         pass
 
         self.add_to_database()
@@ -65,12 +90,18 @@ class Foundation:
         return self.spreadsheet_type.value
     
     def size(self) -> int:
-        return len(self.db_file_name)
+        return len(self.db_dict_items)
     
     def is_empty(self) -> bool:
         return self.size() == 0
 
-    def pop_individual_items_at_position(self, pos: int) -> list[list[str, str, list[str], bool, str, bool]]:
+    def check_first_item(self) -> dict:
+        return self.db_dict_items[0]
+
+    def check_last_item(self) -> dict:
+        return self.db_dict_items[-1]
+
+    def __pop_individual_items_at_position(self, pos: int) -> list[list[str, str, list[str], bool, str, bool]]:
         item: list[list[str, str, list[str], bool, str, bool]] = [
             self.db_file_name.pop(pos),
             self.db_stem.pop(pos),
@@ -88,7 +119,7 @@ class Foundation:
 
         return output
 
-    def pop_last(self) -> list[list[str, str, list[str], bool, str, bool]]:
+    def __pop_last(self) -> list[list[str, str, list[str], bool, str, bool]]:
         position: int = -1
         output:list[list[str, str, list[str], bool, str, bool]] = self.pop_items_at_position(pos=position)
 
@@ -114,7 +145,7 @@ class Foundation:
 
         return
 
-    def pop_front_file_dict(self) -> dict:
+    def pop_front_file_dict(self) -> dict: # USE THIS
         """Extract only one dict item, but also delete values at front of list.
 
         Returns:
@@ -128,7 +159,7 @@ class Foundation:
 
         return output
 
-    def pop_front_only_numbers(self) -> str:
+    def __pop_front_only_numbers(self) -> str:
         position = 0
         return self.db_numbers.pop(position)
 
@@ -172,8 +203,9 @@ class Foundation:
         raise NotImplementedError
 
     def debug_print_all_lists(self):
+        self.debug_print_look_down_here()
         print("--- debug print all instance lists ;3 ---")
-        print()
+        self.debug_current_class_type("Foundation")
 
         output_display:str = f'''
         File names: {self.db_file_name}
@@ -183,9 +215,27 @@ class Foundation:
         Numbers: {self.db_numbers}
         Duplidate?: {self.db_duplicate}
 
-        Dict: {self.db_dict_items}
+        * Dict: {self.db_dict_items}
+
+        * Current size: {self.size()}
         '''
         print(output_display)
+
+        self.debug_print_look_up_here()
+
+    def debug_print_look_down_here(self):
+        print("--- Look down here :3 --- \n")
+
+    def debug_print_look_up_here(self):
+        print("\n--- Look up here :3 ---")
+
+    def debug_current_class_type(self, class_name:str) -> None:
+        output:str = f'''
+        Current class type:
+            * {class_name}
+        '''
+        
+        print(output)
     
 
 class Scanned(Foundation):
@@ -262,4 +312,18 @@ class Selected_Range(Foundation):
         raise NotImplementedError
 
     def debug_print_all_lists(self):
-        print(f"Numbers: {self.db_numbers}")
+        self.debug_print_look_down_here()
+
+        class_name: str = '*Selected_Range'
+        numbers_list:str = f"Numbers: {self.db_numbers}"
+        list_size:str = f"Size: {self.size()}"
+
+        output_print:str = f'''Class: 
+            {class_name}
+
+            {numbers_list}
+            {list_size}
+        '''
+
+        print(output_print)
+        self.debug_print_look_up_here()

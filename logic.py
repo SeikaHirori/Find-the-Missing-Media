@@ -1,4 +1,4 @@
-class logic_time:
+class Create_Range:
 
     def __init__(self) -> None:
         self.desired_range: list[str] = []
@@ -24,3 +24,7 @@ class logic_time:
         # Use binary search here
         return #TODO
 
+class Sorting_items:
+    def hello_world(self):
+        print()
+        print("hello mates from Sorting_items class ;3")
