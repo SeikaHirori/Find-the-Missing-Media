@@ -19,16 +19,21 @@ ____
 
 1. Make sure Python is installed. If it isn't, [check Python's official guide on how to](https://wiki.python.org/moin/BeginnersGuide/Download)!
 1. Download the zip, which is found in the releases page ([here](https://github.com/SeikaHirori/checkAllPhotos/releases)). Download the latest release under "Assets"
-1. Extract the files from the downloaded zip file to the desktop.
-    - Any location is fine, but Desktop simplifies the process :3
+1. Extract the files from the downloaded zip file to the desktop. [^1]
 1. Open a terminal to the extracted folder.
     - We will be using this for the rest of the session.
-1. Create a virtual environment (venv) by running the command:
+1. Create a virtual environment (venv) by running the command [^2]:
     `python3 -m venv venv`
-    - Information on venv [found here](https://docs.python.org/3/library/venv.html#creating-virtual-environments)
-1. Run the environment by using the command:
+1. Run the environment by using the command[^3]:
     `source venv/bin/activate`
-    - Info for other platforms: [here](https://docs.python.org/3/library/venv.html#how-venvs-work)
 1. Install the required library by running:
     `pip install -r requirements.txt`
 1. 
+
+# Additional Information
+
+[^1]: Any location is fine, but Desktop simplifies the process :3
+
+[^2]: Information on venv [found here](https://docs.python.org/3/library/venv.html#creating-virtual-environments)
+
+[^3]: Info for other platforms: [here](https://docs.python.org/3/library/venv.html#how-venvs-work)
