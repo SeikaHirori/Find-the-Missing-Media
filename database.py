@@ -197,13 +197,14 @@ class Foundation:
             stem:str = dissect_stem(current_dict)
 
             suffixes: list[str] = dissect_suffixes(current_dict)
-            combined_suffixes:str = None
-            if suffixes is not None:
-                if len(suffixes) != 0:
-                    combined_suffixes = ", ".join(suffixes)
+            # combined_suffixes:str = None
+            # if suffixes is not None:
+            #     if len(suffixes) != 0:
+            #         combined_suffixes = ", ".join(suffixes)
+            combined_suffixes:str = convert_suffixes_to_str(suffixes)
 
             is_it_IMG:bool = dissect_is_it_IMG(current_dict)
-            numbers:str = dissect_numbers(current_dict)
+            numbers:str = dissect_numbers(current_dict) or "N/A" # RFER #4
             duplicate:bool = dissect_duplicate(current_dict)
 
             worksheet.write(row, col, file_name)
