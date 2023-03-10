@@ -72,8 +72,14 @@ class Sorting_items:
         print("Let's start saving it to an excel sheet :D")
         print()
 
-        
+
+        db_range.save_to_xlsx()
+        db_scanned.save_to_xlsx()
+        db_original_img.save_to_xlsx()
+        db_misc_file.save_to_xlsx()
+        db_duplicate_img.save_to_xlsx()
         db_missing_IMG.save_to_xlsx()
+
 
 
 

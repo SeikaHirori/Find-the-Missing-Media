@@ -155,6 +155,11 @@ class Foundation:
 
         print(f"Checking if subdirectory '{subdirectory}' exists")
         p = Path(f"{subdirectory}")
+        if p.exists():
+            print("It exists!")
+        else:
+            print("It doesn't exist, so let's make it!")
+
         p.mkdir(exist_ok=True)
 
     def save_to_xlsx(self):
@@ -190,14 +195,20 @@ class Foundation:
         for current_dict in self.db_dict_items:
             file_name:str = dissect_file_name(current_dict)
             stem:str = dissect_stem(current_dict)
+
             suffixes: list[str] = dissect_suffixes(current_dict)
+            combined_suffixes:str = None
+            if suffixes is not None:
+                if len(suffixes) != 0:
+                    combined_suffixes = ", ".join(suffixes)
+
             is_it_IMG:bool = dissect_is_it_IMG(current_dict)
             numbers:str = dissect_numbers(current_dict)
             duplicate:bool = dissect_duplicate(current_dict)
 
             worksheet.write(row, col, file_name)
             worksheet.write(row, col + 1, stem)
-            worksheet.write(row, col + 2, suffixes)
+            worksheet.write(row, col + 2, combined_suffixes)
             worksheet.write(row, col + 3, is_it_IMG)
             worksheet.write(row, col + 4, numbers)
             worksheet.write(row, col + 5, duplicate)
@@ -327,7 +338,7 @@ class Selected_Range(Foundation):
     subdirectory_type:Subdirectory_variant = Subdirectory_variant.desired_range
 
     def __init__(self) -> None:
-        self.db_numbers:list[str ]= []
+        super().__init__()
     
     def is_empty(self) -> bool:
         return self.size() == 0
@@ -345,13 +356,13 @@ class Selected_Range(Foundation):
 
         return output
 
-    def save_to_xlsx(self):
-        header_columns: list[str] = [
-            "Missing Numbers",
-        ]
-        header:str = ",".join(header_columns)
+    # def save_to_xlsx(self):
+    #     header_columns: list[str] = [
+    #         "Missing Numbers",
+    #     ]
+    #     header:str = ",".join(header_columns)
         
-        raise NotImplementedError
+    #     raise NotImplementedError
 
     def create_row_for_xlsx(self):
         raise NotImplementedError
