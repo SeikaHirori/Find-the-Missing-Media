@@ -56,9 +56,6 @@ class scan_for_media:
             dict_is_IMG_and_has_numbers: dict = self.obtain_numbers_from_IMG_file(f_stem=f_stem)
             # print(dict_is_IMG_and_has_numbers)
             f_numbers: str = dict_is_IMG_and_has_numbers["numbers"]
-            
-            
-
 
             is_it_IMG:bool = dict_is_IMG_and_has_numbers["is_it_img"]
             # print(f"Printing only numbers: {f_numbers}")
