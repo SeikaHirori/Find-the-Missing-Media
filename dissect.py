@@ -34,3 +34,6 @@ def dissect_duplicate(item_dict:dict) -> bool:
     the_key:str = "duplicates"
     return item_dict[the_key]
 
+def dissect_relative_path(item_dict:dict) -> str:
+    the_key:str = "relative_path"
+    return item_dict[the_key]

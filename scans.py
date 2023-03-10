@@ -25,32 +25,33 @@ class scan_for_media:
         directory_media:Path = Path(_pathway_for_media)
 
         if not directory_media.exists():
-            print("IT DOESN'T EXIST :'[")
+            # print("IT DOESN'T EXIST :'[")
             return None
         else:
-            print("Folder '_media' exists!") 
-        print()
+            # print("Folder '_media' exists!") 
+            print()
+        
+        
 
-        files_in_folder = sorted(directory_media.glob("**/*"))
+        files_in_folder = directory_media.glob("**/*")
+        files_in_folder = sorted(files_in_folder)
+        if len(files_in_folder) <= 0:
+            raise NotImplementedError
+
 
         for index, file in enumerate(files_in_folder):
             # print(f"current index: {index}")
-            f_full_name: str = file.name
 
+            f_full_name: str = file.name
             f_suffixes:str = file.suffixes
+            f_relative_path:str = str(file)
+            print(f_relative_path.__class__)
 
             f_stem:str = None
             if len(f_suffixes) > 1: 
                 f_stem = self.obtain_pure_stem(f_suffixes=f_suffixes, file=file)
             else:
                 f_stem = file.stem
-
-
-            # print(f"Printing file's name with extensions: {f_full_name}")
-
-            # print(f"Printing file's stem: {f_stem}")
-            
-            # print(f"Print suffixes: {f_suffixes}")
             
             # TODO - obtain ONLY numbers from file's string
             dict_is_IMG_and_has_numbers: dict = self.obtain_numbers_from_IMG_file(f_stem=f_stem)
@@ -58,10 +59,7 @@ class scan_for_media:
             f_numbers: str = dict_is_IMG_and_has_numbers["numbers"]
 
             is_it_IMG:bool = dict_is_IMG_and_has_numbers["is_it_img"]
-            # print(f"Printing only numbers: {f_numbers}")
-            # print()
 
-            # self.add_to_lists(f_full_name=f_full_name, f_stem=f_stem, f_suffixes=f_suffixes, f_numbers=f_numbers)
             is_duplicate: bool = self.is_it_a_duplicate(f_numbers=f_numbers)
             
             pure_numbers:str = None
@@ -70,16 +68,18 @@ class scan_for_media:
                 pure_numbers = pure_numbers_splitter[0]
             
 
-            new_dict = self.create_dict(file_name=f_full_name, stem=f_stem, suffixes=f_suffixes, is_IMG=is_it_IMG, numbers=pure_numbers, duplicate=is_duplicate)
+            new_dict = self.create_dict(file_name=f_full_name, stem=f_stem, suffixes=f_suffixes, relative_path=f_relative_path, is_IMG=is_it_IMG, numbers=pure_numbers, duplicate=is_duplicate)
+
             self.files_dict.append(new_dict)
 
 
-    def create_dict(self, file_name: str, stem: str, suffixes: list[str], is_IMG: bool, numbers: str, duplicate: bool) -> dict:
+    def create_dict(self, file_name: str, stem: str, suffixes: list[str], relative_path:str, is_IMG: bool, numbers: str, duplicate: bool) -> dict:
         the_goods:dict = {}
 
         the_goods["file name"] = file_name
         the_goods["stem"] = stem
         the_goods["suffixes"] = suffixes
+        the_goods["relative_path"] = relative_path
         the_goods["is_it_IMG"] = is_IMG
         the_goods["numbers"] = numbers
         the_goods["duplicates"] = duplicate

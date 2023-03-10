@@ -36,7 +36,7 @@ def main():
     # print(f"Spreadsheet type: {db_duplicate_img.show_spreadsheet_type()}")
     
     scanned_goods.find_media(db_scanned=db_scanned)
-    scanned_goods.debug_print_lists()
+    # scanned_goods.debug_print_lists()
 
     desired_range:list[str] = logic_magic.createRange(starting_point=starting_point, end = ending_point)
 
@@ -45,7 +45,7 @@ def main():
     # db_range.debug_print_all_lists()
 
     db_scanned.import_list_of_dict(scanned_goods.export_list_of_dict())
-    db_scanned.debug_print_all_lists()
+    # db_scanned.debug_print_all_lists()
 
     sorting_goods: Sorting_items = Sorting_items()
     sorting_goods.hello_world()

@@ -27,6 +27,8 @@ class Foundation:
     spreadsheet_type: Spreadsheet_variant = Spreadsheet_variant.foundation
     subdirectory_type: Subdirectory_variant = Subdirectory_variant.foundation
 
+    excel_path: str = "_excel"
+
     def __init__(self) -> None:
         # self.files: list[list[str, str, list[str], bool,str, bool]] = []
 
@@ -34,6 +36,7 @@ class Foundation:
         self.db_file_name: list[str] = []
         self.db_stem: list[str] = []
         self.db_suffixes: list[list[str]] = []
+        self.db_relative_paths: list[str] = []
 
         self.db_is_it_IMG: list[bool] = []
         self.db_numbers: list[str] = []
@@ -61,16 +64,18 @@ class Foundation:
     def import_list_of_dict(self, inbound_list_of_dict:list[dict]) -> None:
         self.db_dict_items = inbound_list_of_dict
 
-    def add_all_values_to_database(self, numbers: str, file_name: str = None, stem: str = None, suffixes: list[str] = None, is_IMG: bool = None, duplicate: bool = None):
+    def add_all_values_to_database(self, numbers: str, file_name: str = None, stem: str = None, suffixes: list[str] = None, relative_path:str = None, is_IMG: bool = None, duplicate: bool = None):
         # This is here for debug
         # self.db_file_name.append(file_name)
         # self.db_stem.append(stem)
         # self.db_suffixes.append(suffixes)
         self.db_is_it_IMG.append(is_IMG)
         self.db_numbers.append(numbers)
+
         self.db_duplicate.append(duplicate)
 
-        new_dict_item: dict = self.create_dict(file_name=file_name, stem=stem, suffixes=suffixes, is_IMG=is_IMG, numbers=numbers, duplicate=duplicate)
+        new_dict_item: dict = self.create_dict(file_name=file_name, stem=stem, suffixes=suffixes, relative_path=relative_path, is_IMG=is_IMG, numbers=numbers, duplicate=duplicate)
+
         self.db_dict_items.append(new_dict_item)
 
     def add_dict_to_database(self, item_dict:dict) -> None:
@@ -79,6 +84,7 @@ class Foundation:
         file_name: str = dissect_file_name(item_dict=item_dict)
         stem:str = dissect_stem(item_dict=item_dict)
         suffixes:list[str] = dissect_suffixes(item_dict=item_dict)
+        relative_path:str = dissect_relative_path(item_dict=item_dict)
         numbers:str = dissect_numbers(item_dict=item_dict)
         is_IMG:bool = dissect_is_it_IMG(item_dict=item_dict)
         duplicate:bool = dissect_duplicate(item_dict=item_dict)
@@ -86,6 +92,7 @@ class Foundation:
         self.db_file_name.append(file_name)
         self.db_stem.append(stem)
         self.db_suffixes.append(suffixes)
+        self.db_relative_paths.append(relative_path)
         self.db_is_it_IMG.append(is_IMG)
         self.db_numbers.append(numbers)
         self.db_duplicate.append(duplicate)
@@ -137,12 +144,13 @@ class Foundation:
 
         return output
 
-    def create_dict(self, numbers: str, file_name: str = None, stem: str = None, suffixes: list[str] = None, is_IMG: bool = None, duplicate: bool = None) -> dict:
+    def create_dict(self, numbers: str, file_name: str = None, stem: str = None, suffixes: list[str] = None, relative_path:str = None, is_IMG: bool = None, duplicate: bool = None) -> dict:
         the_goods:dict = {}
 
         the_goods["file name"] = file_name
         the_goods["stem"] = stem
         the_goods["suffixes"] = suffixes
+        the_goods["relative_path"] = relative_path
         the_goods["is_it_IMG"] = is_IMG
         the_goods["numbers"] = numbers
         the_goods["duplicates"] = duplicate
@@ -151,7 +159,7 @@ class Foundation:
 
     def create_subdirectory(self) -> None:
         #TODO
-        subdirectory: str = f"_excel/{self.subdirectory_type.value}/"
+        subdirectory: str = f"{self.excel_path}/{self.subdirectory_type.value}/"
 
         print(f"Checking if subdirectory '{subdirectory}' exists")
         p = Path(f"{subdirectory}")
@@ -162,19 +170,28 @@ class Foundation:
 
         p.mkdir(exist_ok=True)
 
+    def create_excel_directory(self) -> None:
+        # TODO - check if _excel folder exists
+        p = Path(f"{self.excel_path}")
+
+
+        p.mkdir(exist_ok=True)
+
     def save_to_xlsx(self):
         # TODO
         headers_column: list[str] = [
             "file name", 
             "stem", 
             "suffixes", 
+            "relative path",
             "is_it_IMG?",
             "numbers", 
             "duplicates", 
             "Note",
         ]
-        header: str = ",".join(headers_column)
-        
+        # header: str = ",".join(headers_column)
+
+        self.create_excel_directory()
         self.create_subdirectory()
 
         spreadsheet_name:str = self.show_spreadsheet_type()
@@ -186,7 +203,7 @@ class Foundation:
         worksheet = workbook.add_worksheet()
 
         for index, head in enumerate(headers_column):
-            print(f"Index #{index}: {head}")
+            # print(f"Index #{index}: {head}")
             worksheet.write(0, index, head)
 
         row:int = 1
@@ -203,6 +220,8 @@ class Foundation:
             #         combined_suffixes = ", ".join(suffixes)
             combined_suffixes:str = convert_suffixes_to_str(suffixes)
 
+            relative_path:str = dissect_relative_path(current_dict)
+
             is_it_IMG:bool = dissect_is_it_IMG(current_dict)
             numbers:str = dissect_numbers(current_dict) or "N/A" # RFER #4
             duplicate:bool = dissect_duplicate(current_dict)
@@ -210,9 +229,11 @@ class Foundation:
             worksheet.write(row, col, file_name)
             worksheet.write(row, col + 1, stem)
             worksheet.write(row, col + 2, combined_suffixes)
-            worksheet.write(row, col + 3, is_it_IMG)
-            worksheet.write(row, col + 4, numbers)
-            worksheet.write(row, col + 5, duplicate)
+            worksheet.write(row, col + 3, relative_path)
+
+            worksheet.write(row, col + 4, is_it_IMG)
+            worksheet.write(row, col + 5, numbers)
+            worksheet.write(row, col + 6, duplicate)
 
 
             row += 1

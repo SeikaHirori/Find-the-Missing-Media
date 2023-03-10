@@ -11,7 +11,7 @@ class Create_Range:
         self.createRange(starting_point=0, end=50)
 
     def createRange(self, starting_point:int = 0, end:int = 9999) -> list[str]:
-        print(f"hello {self.createRange.__name__}")
+        # print(f"hello {self.createRange.__name__}")
 
         # RFER #1
         output_range: list[str] =  ["%04d" % x for x in range(starting_point, end + 1)]
@@ -61,12 +61,12 @@ class Sorting_items:
             for number in db_range.export_remaining_numbers():
                 db_missing_IMG.add_all_values_to_database(numbers=number)
 
-        db_range.debug_print_all_lists()
-        db_scanned.debug_print_all_lists()
-        db_original_img.debug_print_all_lists()
-        db_misc_file.debug_print_all_lists()
-        db_duplicate_img.debug_print_all_lists()
-        db_missing_IMG.debug_print_all_lists()
+        # db_range.debug_print_all_lists()
+        # db_scanned.debug_print_all_lists()
+        # db_original_img.debug_print_all_lists()
+        # db_misc_file.debug_print_all_lists()
+        # db_duplicate_img.debug_print_all_lists()
+        # db_missing_IMG.debug_print_all_lists()
 
         print("Done looping :3")
         print("Let's start saving it to an excel sheet :D")

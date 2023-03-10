@@ -28,7 +28,7 @@ ____
     `source venv/bin/activate`
 1. Install the required library by running:
     `pip install -r requirements.txt`
-1. 
+1. Now, 
 
 # Additional Information
 
