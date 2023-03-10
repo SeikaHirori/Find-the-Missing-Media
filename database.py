@@ -78,13 +78,6 @@ class Foundation:
         self.db_numbers.append(numbers)
         self.db_duplicate.append(duplicate)
 
-
-
-
-    def __dissect_inbound_list(self, inbound_list: list[list[str, str, list[str], bool, str, bool]]):
-        pass
-
-        self.add_to_database()
     
     def show_spreadsheet_type(self) -> str:
         return self.spreadsheet_type.value
@@ -105,17 +98,6 @@ class Foundation:
         raise NotImplementedError
 
 
-    def __pop_individual_items_at_position(self, pos: int) -> list[list[str, str, list[str], bool, str, bool]]:
-        item: list[list[str, str, list[str], bool, str, bool]] = [
-            self.db_file_name.pop(pos),
-            self.db_stem.pop(pos),
-            self.db_suffixes.pop(pos),
-            self.db_is_it_IMG.pop(pos),
-            self.db_numbers.pop(pos),
-            self.db_duplicate.pop(pos),
-        ]
-
-        return item
     
     def pop_front_item_list(self) -> list[list[str, str, list[str], bool, str, bool]]:
         position: int = 0
@@ -123,31 +105,6 @@ class Foundation:
 
         return output
 
-    def __pop_last(self) -> list[list[str, str, list[str], bool, str, bool]]:
-        position: int = -1
-        output:list[list[str, str, list[str], bool, str, bool]] = self.pop_items_at_position(pos=position)
-
-        return output
-    
-    def __pop_front_create_from_list_and_export_as_new_dict(self, inbound_pop_front_list: list[list[str, str, list[str], bool, str, bool]]) -> dict:
-        """Create dict from list by popping first item.
-
-        Args:
-            inbound_pop_front_list (list[list[str, str, list[str], bool, str, bool]]): _description_
-
-        Returns:
-            dict: _description_
-        """
-        file_name: str = inbound_pop_front_list.pop(0)
-        stem:str = inbound_pop_front_list.pop(0)
-        suffixes: list[str] = inbound_pop_front_list.pop(0)
-        is_IMG:bool = inbound_pop_front_list.pop(0)
-        numbers:str = inbound_pop_front_list.pop(0)
-        duplicate:bool = inbound_pop_front_list.pop(0)
-
-        output: dict = self.create_dict(file_name=file_name, stem=stem, suffixes=suffixes, is_IMG=is_IMG, numbers=numbers, duplicate=duplicate)
-
-        return
 
     def pop_front_file_dict(self) -> dict: # USE THIS
         """Extract only one dict item, but also delete values at front of list.
@@ -162,18 +119,6 @@ class Foundation:
 
 
         return output
-
-    def __pop_front_only_numbers(self) -> str:
-        position = 0
-        return self.db_numbers.pop(position)
-
-    def __delete_item_at_position(self, position: int):
-        del self.db_file_name[position]
-        del self.db_stem[position]
-        del self.db_suffixes[position]
-        del self.db_is_it_IMG[position]
-        del self.db_numbers[position]
-        del self.db_duplicate[position]
 
     def create_dict(self, file_name: str, stem: str, suffixes: list[str], is_IMG: bool, numbers: str, duplicate: bool) -> dict:
         the_goods:dict = {}
