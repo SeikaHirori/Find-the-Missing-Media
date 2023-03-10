@@ -97,13 +97,7 @@ class Foundation:
     def show_subdirectory(self) -> str:
         return self.subdirectory_type.value
 
-    def create_subdirectory(self) -> None:
-        #TODO
-        subdirectory: str = f"_excel/{self.subdirectory_type.value}/"
 
-        print(f"Checking if subdirectory '{subdirectory}' exists")
-        p = Path(f"{subdirectory}")
-        p.mkdir(exist_ok=True)
 
     def size(self) -> int:
         return len(self.db_dict_items)
@@ -155,6 +149,13 @@ class Foundation:
 
         return the_goods
 
+    def create_subdirectory(self) -> None:
+        #TODO
+        subdirectory: str = f"_excel/{self.subdirectory_type.value}/"
+
+        print(f"Checking if subdirectory '{subdirectory}' exists")
+        p = Path(f"{subdirectory}")
+        p.mkdir(exist_ok=True)
 
     def save_to_xlsx(self):
         # TODO
@@ -165,7 +166,7 @@ class Foundation:
             "is_it_IMG?",
             "numbers", 
             "duplicates", 
-            "Note:",
+            "Note",
         ]
         header: str = ",".join(headers_column)
         
@@ -177,8 +178,10 @@ class Foundation:
 
         # RFER #3
         workbook:xlsxwriter.Workbook = xlsxwriter.Workbook(f"_excel/{folder_name}/{spreadsheet_name}___{date}.xlsx")
-        worksheet = workbook.add_chartsheet()
+        worksheet = workbook.add_worksheet()
+
         for index, head in enumerate(headers_column):
+            print(f"Index #{index}: {head}")
             worksheet.write(0, index, head)
 
 
