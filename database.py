@@ -286,7 +286,7 @@ class Missing_Images(Foundation):
         self.debug_current_class_type()
 
         output_display:str = f'''
-        Missing Numbers: {self.db_numbers}
+        Missing IMG numbers: {self.db_numbers}
 
         - Dict: {self.db_dict_items}
 

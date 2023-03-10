@@ -56,6 +56,10 @@ class scan_for_media:
             dict_is_IMG_and_has_numbers: dict = self.obtain_numbers_from_IMG_file(f_stem=f_stem)
             # print(dict_is_IMG_and_has_numbers)
             f_numbers: str = dict_is_IMG_and_has_numbers["numbers"]
+            
+            
+
+
             is_it_IMG:bool = dict_is_IMG_and_has_numbers["is_it_img"]
             # print(f"Printing only numbers: {f_numbers}")
             # print()
@@ -63,8 +67,13 @@ class scan_for_media:
             # self.add_to_lists(f_full_name=f_full_name, f_stem=f_stem, f_suffixes=f_suffixes, f_numbers=f_numbers)
             is_duplicate: bool = self.is_it_a_duplicate(f_numbers=f_numbers)
             
+            pure_numbers:str = None
+            if f_numbers is not None:
+                pure_numbers_splitter = f_numbers.split(" ")
+                pure_numbers = pure_numbers_splitter[0]
+            
 
-            new_dict = self.create_dict(file_name=f_full_name, stem=f_stem, suffixes=f_suffixes, is_IMG=is_it_IMG, numbers=f_numbers, duplicate=is_duplicate)
+            new_dict = self.create_dict(file_name=f_full_name, stem=f_stem, suffixes=f_suffixes, is_IMG=is_it_IMG, numbers=pure_numbers, duplicate=is_duplicate)
             self.files_dict.append(new_dict)
 
     def create_dict(self, file_name: str, stem: str, suffixes: list[str], is_IMG: bool, numbers: str, duplicate: bool) -> dict:

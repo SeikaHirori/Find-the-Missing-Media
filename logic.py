@@ -40,14 +40,17 @@ class Sorting_items:
 
             f_number: str = dissect_numbers(item_dict=current_item)
             f_duplicate: bool = dissect_duplicate(item_dict=current_item)
+            f_is_it_IMG:bool = dissect_is_it_IMG(item_dict=current_item)
 
-            if f_number in db_range.db_numbers:
+            if not f_is_it_IMG:
+                db_misc_file.add_dict_to_database(current_item)
+            elif f_duplicate: # Puts duplicate item into duplicate spreadshhet immediately
+                db_duplicate_img.add_dict_to_database(current_item)
+            elif f_number in db_range.db_numbers:
                 index = db_range.db_numbers.index(f_number)
                 db_range.db_numbers.pop(index)
 
                 db_original_img.add_dict_to_database(current_item)
-            elif f_duplicate:
-                db_duplicate_img.add_dict_to_database(current_item)
             else:
                 db_misc_file.add_dict_to_database(current_item)
 
