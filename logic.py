@@ -55,6 +55,9 @@ class Sorting_items:
                 db_misc_file.add_dict_to_database(current_item)
 
         if not db_range.is_empty():
+            '''
+                If there are numbers still within range.
+            '''
             for number in db_range.export_remaining_numbers():
                 db_missing_IMG.add_all_values_to_database(numbers=number)
 

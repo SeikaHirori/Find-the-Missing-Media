@@ -49,7 +49,7 @@ class Foundation:
     def import_list_of_dict(self, inbound_list_of_dict:list[dict]) -> None:
         self.db_dict_items = inbound_list_of_dict
 
-    def add_all_values_to_database(self, file_name: str, stem: str, suffixes: list[str], is_IMG: bool, numbers: str, duplicate: bool):
+    def add_all_values_to_database(self, numbers: str, file_name: str = None, stem: str = None, suffixes: list[str] = None, is_IMG: bool = None, duplicate: bool = None):
         # This is here for debug
         # self.db_file_name.append(file_name)
         # self.db_stem.append(stem)
@@ -120,7 +120,7 @@ class Foundation:
 
         return output
 
-    def create_dict(self, file_name: str, stem: str, suffixes: list[str], is_IMG: bool, numbers: str, duplicate: bool) -> dict:
+    def create_dict(self, numbers: str, file_name: str = None, stem: str = None, suffixes: list[str] = None, is_IMG: bool = None, duplicate: bool = None) -> dict:
         the_goods:dict = {}
 
         the_goods["file name"] = file_name
@@ -217,13 +217,12 @@ class Missing_Images(Foundation):
     def __init__(self) -> None:
         super().__init__()
 
-    def add_dict_to_database(self, item_dict: dict) -> None:
-        return super().add_dict_to_database(item_dict)
+    # def add_dict_to_database(self, item_dict: dict) -> None:
+    #     return super().add_dict_to_database(item_dict)
 
-    def add_all_values_to_database(self, numbers: str, file_name: str=None, stem: str=None, suffixes: list[str]=None, is_IMG: bool=None, duplicate: bool=None):
-        return super().add_all_values_to_database(file_name, stem, suffixes, is_IMG, numbers, duplicate)
+    # def add_all_values_to_database(self, file_name: str, stem: str, suffixes: list[str], is_IMG: bool, numbers: str, duplicate: bool):
+    #     return super().add_all_values_to_database(file_name, stem, suffixes, is_IMG, numbers, duplicate)
 
-    
     def debug_print_all_lists(self):
         print()
         self.debug_print_look_down_here()
@@ -232,8 +231,6 @@ class Missing_Images(Foundation):
 
         output_display:str = f'''
         Missing IMG numbers: {self.db_numbers}
-
-        - Dict: {self.db_dict_items}
 
         - Current size: {self.size()}
         '''
