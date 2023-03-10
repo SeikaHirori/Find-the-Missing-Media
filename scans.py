@@ -26,7 +26,7 @@ class scan_for_media:
 
         if not directory_media.exists():
             print("IT DOESN'T EXIST :'[")
-            return []
+            return None
         else:
             print("Folder '_media' exists!") 
         print()
