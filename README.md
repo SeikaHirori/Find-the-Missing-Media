@@ -1,8 +1,9 @@
 # Peek a Media
 
 ***House Keeping***
-- Name change in progress
-- I've only tested on MacOS, so experiences on Windows and Linux may vary.
+- Name change for project is work in progress (WIP)
+- The commands mentioned, so experiences on Windows and Linux may vary.
+- If you encounter an issue on a step and there's no additional information, use them Google skills! It'll be good practice :3
 
 Blog post: 
 - TBA
@@ -23,6 +24,11 @@ ____
 1. Open a terminal to the extracted folder.
     - We will be using this for the rest of the session.
 1. Create a virtual environment (venv) by running the command:
-    python3 -m venv venv
+    `python3 -m venv venv`
     - Information on venv [found here](https://docs.python.org/3/library/venv.html#creating-virtual-environments)
+1. Run the environment by using the command:
+    `source venv/bin/activate`
+    - Info for other platforms: [here](https://docs.python.org/3/library/venv.html#how-venvs-work)
+1. Install the required library by running:
+    `pip install -r requirements.txt`
 1. 
