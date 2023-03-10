@@ -1,4 +1,5 @@
 from enum import Enum
+from dissect import *
 import xlsxwriter
 
 class Spreadsheet_variant(Enum):
@@ -8,6 +9,7 @@ class Spreadsheet_variant(Enum):
     original_Image = "Original Image"
     duplicate_image = "Duplicate Image"
     misc_file = "Misc File"
+    desired_range = "Desired range"
 
 class Foundation:
 
@@ -47,11 +49,11 @@ class Foundation:
     def import_list_of_dict(self, inbound_list_of_dict:list[dict]) -> None:
         self.db_dict_items = inbound_list_of_dict
 
-    def add_to_database(self, file_name: str, stem: str, suffixes: list[str], is_IMG: bool, numbers: str, duplicate: bool):
+    def add_all_values_to_database(self, file_name: str, stem: str, suffixes: list[str], is_IMG: bool, numbers: str, duplicate: bool):
         # This is here for debug
-        self.db_file_name.append(file_name)
-        self.db_stem.append(stem)
-        self.db_suffixes.append(suffixes)
+        # self.db_file_name.append(file_name)
+        # self.db_stem.append(stem)
+        # self.db_suffixes.append(suffixes)
         self.db_is_it_IMG.append(is_IMG)
         self.db_numbers.append(numbers)
         self.db_duplicate.append(duplicate)
@@ -59,9 +61,24 @@ class Foundation:
         new_dict_item: dict = self.create_dict(file_name=file_name, stem=stem, suffixes=suffixes, is_IMG=is_IMG, numbers=numbers, duplicate=duplicate)
         self.db_dict_items.append(new_dict_item)
 
-    
-    
-    
+    def add_dict_to_database(self, item_dict:dict) -> None:
+        self.db_dict_items.append(item_dict)
+
+        file_name: str = dissect_file_name(item_dict=item_dict)
+        stem:str = dissect_stem(item_dict=item_dict)
+        suffixes:list[str] = dissect_suffixes(item_dict=item_dict)
+        numbers:str = dissect_numbers(item_dict=item_dict)
+        is_IMG:bool = dissect_is_it_IMG(item_dict=item_dict)
+        duplicate:bool = dissect_duplicate(item_dict=item_dict)
+
+        self.db_file_name.append(file_name)
+        self.db_stem.append(stem)
+        self.db_suffixes.append(suffixes)
+        self.db_is_it_IMG.append(is_IMG)
+        self.db_numbers.append(numbers)
+        self.db_duplicate.append(duplicate)
+
+
 
 
     def __dissect_inbound_list(self, inbound_list: list[list[str, str, list[str], bool, str, bool]]):
@@ -83,6 +100,10 @@ class Foundation:
 
     def check_last_item(self) -> dict:
         return self.db_dict_items[-1]
+
+    def is_inbound_number_in_list(self, inbound_number:str):
+        raise NotImplementedError
+
 
     def __pop_individual_items_at_position(self, pos: int) -> list[list[str, str, list[str], bool, str, bool]]:
         item: list[list[str, str, list[str], bool, str, bool]] = [
@@ -137,7 +158,7 @@ class Foundation:
         position = 0
         output: dict = self.db_dict_items.pop(position)
 
-        self.delete_item_at_position(position=position)
+        # self.__delete_item_at_position(position=position)
 
 
         return output
@@ -146,7 +167,7 @@ class Foundation:
         position = 0
         return self.db_numbers.pop(position)
 
-    def delete_item_at_position(self, position: int):
+    def __delete_item_at_position(self, position: int):
         del self.db_file_name[position]
         del self.db_stem[position]
         del self.db_suffixes[position]
@@ -186,9 +207,10 @@ class Foundation:
         raise NotImplementedError
 
     def debug_print_all_lists(self):
+        print()
         self.debug_print_look_down_here()
         print("--- debug print all instance lists ;3 ---")
-        self.debug_current_class_type("Foundation")
+        self.debug_current_class_type()
 
         output_display:str = f'''
         File names: {self.db_file_name}
@@ -198,9 +220,9 @@ class Foundation:
         Numbers: {self.db_numbers}
         Duplidate?: {self.db_duplicate}
 
-        * Dict: {self.db_dict_items}
+        - Dict: {self.db_dict_items}
 
-        * Current size: {self.size()}
+        - Current size: {self.size()}
         '''
         print(output_display)
 
@@ -210,12 +232,12 @@ class Foundation:
         print("--- Look down here :3 --- \n")
 
     def debug_print_look_up_here(self):
-        print("\n--- Look up here :3 ---")
+        print("\n--- Look up here :3 ---\n")
 
-    def debug_current_class_type(self, class_name:str) -> None:
+    def debug_current_class_type(self) -> None:
         output:str = f'''
         Current class type:
-            * {class_name}
+        - {self.show_spreadsheet_type()}
         '''
         
         print(output)
@@ -250,6 +272,30 @@ class Missing_Images(Foundation):
     def __init__(self) -> None:
         super().__init__()
 
+    def add_dict_to_database(self, item_dict: dict) -> None:
+        return super().add_dict_to_database(item_dict)
+
+    def add_all_values_to_database(self, numbers: str, file_name: str=None, stem: str=None, suffixes: list[str]=None, is_IMG: bool=None, duplicate: bool=None):
+        return super().add_all_values_to_database(file_name, stem, suffixes, is_IMG, numbers, duplicate)
+
+    
+    def debug_print_all_lists(self):
+        print()
+        self.debug_print_look_down_here()
+        print("--- debug print all instance lists ;3 ---")
+        self.debug_current_class_type()
+
+        output_display:str = f'''
+        Missing Numbers: {self.db_numbers}
+
+        - Dict: {self.db_dict_items}
+
+        - Current size: {self.size()}
+        '''
+        print(output_display)
+
+        self.debug_print_look_up_here()
+
 class Misc_file(Foundation):
 
     spreadsheet_type: Spreadsheet_variant = Spreadsheet_variant.misc_file
@@ -263,6 +309,8 @@ class Selected_Range(Foundation):
     Args:
         Foundation (_type_): _description_
     """
+
+    spreadsheet_type:Spreadsheet_variant = Spreadsheet_variant.desired_range
 
     def __init__(self) -> None:
         self.db_numbers:list[str ]= []

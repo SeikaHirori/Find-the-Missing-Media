@@ -1,4 +1,5 @@
 from database import *
+from dissect import *
 
 class Create_Range:
 
@@ -32,36 +33,35 @@ class Sorting_items:
         print()
         print("hello mates from Sorting_items class ;3")
 
-    def action(self, db_range:Selected_Range, db_scanned:Scanned, db_original_img: Original_Image, db_misc_file: Misc_file, db_missing_IMG: Missing_Images) -> None:
+    def action(self, db_range:Selected_Range, db_scanned:Scanned, db_original_img: Original_Image, db_misc_file: Misc_file, db_duplicate_img:Duplicate_Image, db_missing_IMG: Missing_Images) -> None:
 
-        for item_scanned in db_scanned.db_dict_items:
-            print(item_scanned)
+        while not db_scanned.is_empty():
+            current_item: dict = db_scanned.pop_front_file_dict()
 
-            print(self.dissect_numbers(item_scanned))
-    
-    def dissect_everything_in_dict(self, item_dict:dict):
-        raise NotImplementedError
-    
-    def dissect_file_name(self, item_dict:dict) -> str:
-        the_key:str = "file_name"
-        return item_dict[the_key]
-    
-    def dissect_stem(self, item_dict:dict) -> str:
-        the_key:str = "stem"
-        return item_dict[the_key]
-    
-    def dissect_suffixes(self, item_dict:dict) -> list[str]:
-        the_key:str = "suffixes"
-        return item_dict[the_key]
-    
-    def dissect_is_it_IMG(self, item_dict:dict) -> bool:
-        the_key:str = "is_it_IMG"
-        return item_dict[the_key]
-    
-    def dissect_numbers(self, item_dict:dict) -> str:
-        the_key:str = "numbers"
-        return item_dict[the_key]
-    
-    def dissect_duplicate(self, item_dict:dict) -> bool:
-        the_key:str = "duplicates"
-        return item_dict[the_key]
+            f_number: str = dissect_numbers(item_dict=current_item)
+            f_duplicate: bool = dissect_duplicate(item_dict=current_item)
+
+            if f_number in db_range.db_numbers:
+                index = db_range.db_numbers.index(f_number)
+                db_range.db_numbers.pop(index)
+
+                db_original_img.add_dict_to_database(current_item)
+            elif f_duplicate:
+                db_duplicate_img.add_dict_to_database(current_item)
+            else:
+                db_misc_file.add_dict_to_database(current_item)
+
+        if not db_range.is_empty():
+            for number in db_range.export_remaining_numbers():
+                db_missing_IMG.add_all_values_to_database(numbers=number)
+
+        db_range.debug_print_all_lists()
+        db_scanned.debug_print_all_lists()
+        db_original_img.debug_print_all_lists()
+        db_misc_file.debug_print_all_lists()
+        db_duplicate_img.debug_print_all_lists()
+        db_missing_IMG.debug_print_all_lists()
+
+
+
+

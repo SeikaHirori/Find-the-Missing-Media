@@ -46,7 +46,7 @@ class scan_for_media:
                 f_stem = file.stem
 
 
-            print(f"Printing file's name with extensions: {f_full_name}")
+            # print(f"Printing file's name with extensions: {f_full_name}")
 
             # print(f"Printing file's stem: {f_stem}")
             
@@ -54,7 +54,7 @@ class scan_for_media:
             
             # TODO - obtain ONLY numbers from file's string
             dict_is_IMG_and_has_numbers: dict = self.obtain_numbers_from_IMG_file(f_stem=f_stem)
-            print(dict_is_IMG_and_has_numbers)
+            # print(dict_is_IMG_and_has_numbers)
             f_numbers: str = dict_is_IMG_and_has_numbers["numbers"]
             is_it_IMG:bool = dict_is_IMG_and_has_numbers["is_it_img"]
             # print(f"Printing only numbers: {f_numbers}")
