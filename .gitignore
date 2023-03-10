@@ -7,3 +7,13 @@ _media/*
 !_media/.gitkeep
 !_media/test.md
 !_media/zeep.md.txt
+
+_excel/*
+!_excel/.gitkeep
+!_excel/Desired_range/.gitkeep
+!_excel/Duplicate_Image/.gitkeep
+!_excel/Foundation/.gitkeep
+!_excel/Misc_File/.gitkeep
+!_excel/Missing_media/.gitkeep
+!_excel/Original_Image/.gitkeep
+!_excel/Scanned_file/.gitkeep

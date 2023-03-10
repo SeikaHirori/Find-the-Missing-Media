@@ -68,6 +68,13 @@ class Sorting_items:
         db_duplicate_img.debug_print_all_lists()
         db_missing_IMG.debug_print_all_lists()
 
+        print("Done looping :3")
+        print("Let's start saving it to an excel sheet :D")
+        print()
+
+        
+        db_missing_IMG.save_to_xlsx()
+
 
 
 

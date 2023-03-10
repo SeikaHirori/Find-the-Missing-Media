@@ -1,19 +1,31 @@
-from enum import Enum
+from datetime import datetime
 from dissect import *
+from enum import Enum
+from pathlib import Path
 import xlsxwriter
 
 class Spreadsheet_variant(Enum):
+    foundation = "foundation"
+    scanned = "scanned_file"
+    missing_Image = "missing_media"
+    original_Image = "original_image"
+    duplicate_image = "duplicate_image"
+    misc_file = "misc_file"
+    desired_range = "desired_range"
+
+class Subdirectory_variant(Enum):
     foundation = "Foundation"
-    scanned = "Scanned file"
-    missing_Image = "Missing media"
-    original_Image = "Original Image"
-    duplicate_image = "Duplicate Image"
-    misc_file = "Misc File"
-    desired_range = "Desired range"
+    scanned = "Scanned_file"
+    missing_Image = "Missing_media"
+    original_Image = "Original_Image"
+    duplicate_image = "Duplicate_Image"
+    misc_file = "Misc_File"
+    desired_range = "Desired_range"
 
 class Foundation:
 
     spreadsheet_type: Spreadsheet_variant = Spreadsheet_variant.foundation
+    subdirectory_type: Subdirectory_variant = Subdirectory_variant.foundation
 
     def __init__(self) -> None:
         # self.files: list[list[str, str, list[str], bool,str, bool]] = []
@@ -82,6 +94,17 @@ class Foundation:
     def show_spreadsheet_type(self) -> str:
         return self.spreadsheet_type.value
     
+    def show_subdirectory(self) -> str:
+        return self.subdirectory_type.value
+
+    def create_subdirectory(self) -> None:
+        #TODO
+        subdirectory: str = f"_excel/{self.subdirectory_type.value}/"
+
+        print(f"Checking if subdirectory '{subdirectory}' exists")
+        p = Path(f"{subdirectory}")
+        p.mkdir(exist_ok=True)
+
     def size(self) -> int:
         return len(self.db_dict_items)
     
@@ -146,7 +169,27 @@ class Foundation:
         ]
         header: str = ",".join(headers_column)
         
-        raise NotImplementedError
+        self.create_subdirectory()
+
+        spreadsheet_name:str = self.show_spreadsheet_type()
+        folder_name:str = self.show_subdirectory()
+        date = datetime.now()
+
+        # RFER #3
+        workbook:xlsxwriter.Workbook = xlsxwriter.Workbook(f"_excel/{folder_name}/{spreadsheet_name}___{date}.xlsx")
+        worksheet = workbook.add_chartsheet()
+        for index, head in enumerate(headers_column):
+            worksheet.write(0, index, head)
+
+
+
+        row:int = 1
+        col:int = 1
+
+        workbook.close()
+
+
+
 
     def create_row_for_xlsx(self):
         raise NotImplementedError
@@ -191,6 +234,7 @@ class Foundation:
 class Scanned(Foundation):
 
     spreadsheet_type: Spreadsheet_variant = Spreadsheet_variant.scanned
+    subdirectory_type:Subdirectory_variant = Subdirectory_variant.scanned
 
     def __init__(self) -> None:
         super().__init__()
@@ -198,6 +242,8 @@ class Scanned(Foundation):
 class Original_Image(Foundation):
 
     spreadsheet_type: Spreadsheet_variant = Spreadsheet_variant.original_Image
+    subdirectory_type: Subdirectory_variant = Subdirectory_variant.original_Image
+
 
     def __init__(self) -> None:
         super().__init__()
@@ -207,12 +253,16 @@ class Duplicate_Image(Foundation):
 
     spreadsheet_type: Spreadsheet_variant = Spreadsheet_variant.duplicate_image
 
+    subdirectory_type:Subdirectory_variant = Subdirectory_variant.duplicate_image
+
     def __init__(self) -> None:
         super().__init__()
 
 class Missing_Images(Foundation):
     
     spreadsheet_type: Spreadsheet_variant = Spreadsheet_variant.missing_Image
+
+    subdirectory_type:Subdirectory_variant = Subdirectory_variant.missing_Image
 
     def __init__(self) -> None:
         super().__init__()
@@ -242,6 +292,8 @@ class Misc_file(Foundation):
 
     spreadsheet_type: Spreadsheet_variant = Spreadsheet_variant.misc_file
 
+    subdirectory_type:Subdirectory_variant = Subdirectory_variant.misc_file
+
     def __init__(self) -> None:
         super().__init__()
 
@@ -253,6 +305,7 @@ class Selected_Range(Foundation):
     """
 
     spreadsheet_type:Spreadsheet_variant = Spreadsheet_variant.desired_range
+    subdirectory_type:Subdirectory_variant = Subdirectory_variant.desired_range
 
     def __init__(self) -> None:
         self.db_numbers:list[str ]= []

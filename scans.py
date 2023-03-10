@@ -76,6 +76,7 @@ class scan_for_media:
             new_dict = self.create_dict(file_name=f_full_name, stem=f_stem, suffixes=f_suffixes, is_IMG=is_it_IMG, numbers=pure_numbers, duplicate=is_duplicate)
             self.files_dict.append(new_dict)
 
+
     def create_dict(self, file_name: str, stem: str, suffixes: list[str], is_IMG: bool, numbers: str, duplicate: bool) -> dict:
         the_goods:dict = {}
 

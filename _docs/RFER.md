@@ -5,3 +5,7 @@
 - RFER #2
     - convert pathlib object to str
         - https://stackoverflow.com/a/44315845
+
+- RFER #3
+    - How to save in specific location with xlsxwriter library
+        - https://stackoverflow.com/a/22905865
