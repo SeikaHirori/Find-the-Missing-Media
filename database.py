@@ -143,7 +143,7 @@ class Foundation:
         the_goods["file name"] = file_name
         the_goods["stem"] = stem
         the_goods["suffixes"] = suffixes
-        the_goods["is_it_IMG?"] = is_IMG
+        the_goods["is_it_IMG"] = is_IMG
         the_goods["numbers"] = numbers
         the_goods["duplicates"] = duplicate
 
@@ -184,10 +184,26 @@ class Foundation:
             print(f"Index #{index}: {head}")
             worksheet.write(0, index, head)
 
-
-
         row:int = 1
-        col:int = 1
+        col:int = 0
+
+        for current_dict in self.db_dict_items:
+            file_name:str = dissect_file_name(current_dict)
+            stem:str = dissect_stem(current_dict)
+            suffixes: list[str] = dissect_suffixes(current_dict)
+            is_it_IMG:bool = dissect_is_it_IMG(current_dict)
+            numbers:str = dissect_numbers(current_dict)
+            duplicate:bool = dissect_duplicate(current_dict)
+
+            worksheet.write(row, col, file_name)
+            worksheet.write(row, col + 1, stem)
+            worksheet.write(row, col + 2, suffixes)
+            worksheet.write(row, col + 3, is_it_IMG)
+            worksheet.write(row, col + 4, numbers)
+            worksheet.write(row, col + 5, duplicate)
+
+
+            row += 1
 
         workbook.close()
 
