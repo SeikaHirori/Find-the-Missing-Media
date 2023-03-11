@@ -18,23 +18,36 @@ ____
 # Instructions
 
 1. Make sure Python is installed. If it isn't, [check Python's official guide on how to](https://wiki.python.org/moin/BeginnersGuide/Download)!
+
 1. Download the zip, which is found in the releases page ([here](https://github.com/SeikaHirori/checkAllPhotos/releases)). Download the latest release under "Assets"
+
 1. Extract the files from the downloaded zip file to the desktop. [^1]
+
 1. Open a terminal to the extracted folder.
     - We will be using this for the rest of the session.
+
 1. Create a virtual environment (venv) by running the command [^2]:
     `python3 -m venv venv`
+
 1. Run the environment by using the command[^3]:
     `source venv/bin/activate`
+
 1. Install the required library by running:
     `pip install -r requirements.txt`
+
 1. Now, move the photos and videos in the folder "_media"
+
 1. Run the command:
     `python3 main.py`
+
 1. Enter the first IMG's digit
     - Ex: If the first/smallest IMG is "IMG_0038", type and enter "38"
+
 1. Enter the last IMG's digit
     - Ex: If the last/largest IMG is "IMG_0090", type and enter "90"
+
+1. If successful, check the "_excel" folder and view the newly created xlsx (Microsft Excel) spreadsheet.
+    - 
 
 # Additional Information
 
