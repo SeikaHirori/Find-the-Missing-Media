@@ -40,6 +40,6 @@ ____
 
 [^1]: Any location is fine, but Desktop simplifies the process :3
 
-[^2]: Information on venv [found here](https://docs.python.org/3/library/venv.html#creating-virtual-environments)
+[^2]: Information on venv found [here](https://docs.python.org/3/library/venv.html#creating-virtual-environments) :3
 
-[^3]: Info for other platforms: [here](https://docs.python.org/3/library/venv.html#how-venvs-work)
+[^3]: Info for other platforms: [here](https://docs.python.org/3/library/venv.html#how-venvs-work) :3
