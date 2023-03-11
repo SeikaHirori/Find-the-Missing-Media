@@ -17,3 +17,8 @@ _excel/*
 !_excel/Missing_media/.gitkeep
 !_excel/Original_Image/.gitkeep
 !_excel/Scanned_file/.gitkeep
+
+
+build/*
+dist/*
+main.spec
