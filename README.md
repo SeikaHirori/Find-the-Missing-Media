@@ -28,7 +28,13 @@ ____
     `source venv/bin/activate`
 1. Install the required library by running:
     `pip install -r requirements.txt`
-1. Now, 
+1. Now, move the photos and videos in the folder "_media"
+1. Run the command:
+    `python3 main.py`
+1. Enter the first IMG's digit
+    - Ex: If the first/smallest IMG is "IMG_0038", type and enter "38"
+1. Enter the last IMG's digit
+    - Ex: If the last/largest IMG is "IMG_0090", type and enter "90"
 
 # Additional Information
 

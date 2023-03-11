@@ -6,11 +6,13 @@ def main():
     print("User interface: hello! Let's start :3")
 
     print("Let's get the range! Range should be between 0 to 1000")
-    starting_point:int = int_user_input("What's the starting point?")
+    template_type_and_enter:str = "Type the number, then press the Enter key :3"
+
+    starting_point:int = int_user_input(f"What's the starting point? {template_type_and_enter}")
     
     ending_point:int = None
     while True:
-        ending_point = int_user_input("What's the ending point?")
+        ending_point = int_user_input(f"What's the ending point? {template_type_and_enter}")
 
         if ending_point >= starting_point:
             break
@@ -48,8 +50,11 @@ def main():
     # db_scanned.debug_print_all_lists()
 
     sorting_goods: Sorting_items = Sorting_items()
-    sorting_goods.hello_world()
+
+
     sorting_goods.action(db_range=db_range, db_scanned=db_scanned, db_original_img=db_original_img, db_misc_file=db_misc_file, db_missing_IMG=db_missing_IMG, db_duplicate_img=db_duplicate_img)
+
+    print(f"Program finished!")
 
 def int_user_input(prompt: str) -> int:
     prompt += "\n"

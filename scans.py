@@ -45,7 +45,6 @@ class scan_for_media:
             f_full_name: str = file.name
             f_suffixes:str = file.suffixes
             f_relative_path:str = str(file)
-            print(f_relative_path.__class__)
 
             f_stem:str = None
             if len(f_suffixes) > 1: 

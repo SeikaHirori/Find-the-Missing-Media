@@ -159,12 +159,12 @@ class Foundation:
         #TODO
         subdirectory: str = f"{self.excel_path}/{self.subdirectory_type.value}/"
 
-        print(f"Checking if subdirectory '{subdirectory}' exists")
+        # print(f"Checking if subdirectory '{subdirectory}' exists")
         p = Path(f"{subdirectory}")
-        if p.exists():
-            print("It exists!")
-        else:
-            print("It doesn't exist, so let's make it!")
+        # if p.exists():
+        #     print("It exists!")
+        # else:
+        #     print("It doesn't exist, so let's make it!")
 
         p.mkdir(exist_ok=True)
 
