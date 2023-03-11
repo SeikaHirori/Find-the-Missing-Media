@@ -65,6 +65,8 @@ class Foundation:
         self.db_dict_items = inbound_list_of_dict
 
     def add_all_values_to_database(self, numbers: str, file_name: str = None, stem: str = None, suffixes: list[str] = None, relative_path:str = None, is_IMG: bool = None, duplicate: bool = None):
+
+
         # This is here for debug
         # self.db_file_name.append(file_name)
         # self.db_stem.append(stem)
@@ -319,11 +321,9 @@ class Missing_Images(Foundation):
     def __init__(self) -> None:
         super().__init__()
 
-    # def add_dict_to_database(self, item_dict: dict) -> None:
-    #     return super().add_dict_to_database(item_dict)
+    def add_all_values_to_database(self, numbers: str, file_name: str = None, stem: str = None, suffixes: list[str] = None, relative_path: str = None, is_IMG: bool = None, duplicate: bool = None):
+        return super().add_all_values_to_database(numbers, file_name, stem, suffixes, relative_path, is_IMG, duplicate)
 
-    # def add_all_values_to_database(self, file_name: str, stem: str, suffixes: list[str], is_IMG: bool, numbers: str, duplicate: bool):
-    #     return super().add_all_values_to_database(file_name, stem, suffixes, is_IMG, numbers, duplicate)
 
     def debug_print_all_lists(self):
         print()
