@@ -120,11 +120,7 @@ class Foundation:
     def check_last_item(self) -> dict:
         return self.db_dict_items[-1]
 
-    def is_inbound_number_in_list(self, inbound_number:str):
-        raise NotImplementedError
 
-
-    
     def pop_front_item_list(self) -> list[list[str, str, list[str], bool, str, bool]]:
         position: int = 0
         output:list[list[str, str, list[str], bool, str, bool]] = self.pop_items_at_position(pos=position)
