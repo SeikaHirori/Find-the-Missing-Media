@@ -46,7 +46,7 @@ ____
 1. Enter the last IMG's digit
     - Ex: If the last/largest IMG is "IMG_0090", type and enter "90"
 
-1. If successful, check the "_excel" folder and view the newly created xlsx (Microsft Excel) spreadsheets of the following categories:
+1. If successful, check the "_excel" folder and view the newly created xlsx (Microsoft's Excel) spreadsheets of the following categories:
     - Duplicate Images
     - Misc File
     - Missing Media
