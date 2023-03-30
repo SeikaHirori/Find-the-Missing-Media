@@ -1,4 +1,8 @@
 # Find the Missing Media
+Purpose: Automate finding the missing photo and video when importing from iOS devices or camera storage cards.
+
+Reason: To increase efficiency of verifiying and logging the possibly missing photos and videos.
+
 
 ***House Keeping***
 - Name change for project is work in progress (WIP)
